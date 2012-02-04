@@ -16,6 +16,14 @@ The script takes 2 arguments, the keyword and the language. Currently only suppo
 Example:
 
 <pre>
-node keywordGrab.js "tijuana" es
+ivan@scorpion:~$ node keywordGrab.js "tijuana" es
+tijuana
+tijuana hoy
+tijuana press
+tijuana.gob.mx
+tijuana baja california
+craigslist tijuana
+tijuana innovadora
+tijuana zona río
 <pre>
 
