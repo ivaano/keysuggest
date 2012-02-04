@@ -11,12 +11,12 @@
 
 ## How to use it
 
-The script takes 2 arguments, the keyword and the language. Currently only supports english from US and spanish from Mexico.
+The script takes 3 arguments, the keyword, language (optional) search engine (optional || google || bing). Currently only supports english from US and spanish from Mexico.
 
 Example:
 
 <pre>
-ivan@scorpion:~$ node keywordGrab.js "tijuana" es
+ivan@scorpion:~$ node keywordGrab.js "tijuana" es bing
 tijuana
 tijuana hoy
 tijuana press
