@@ -6,12 +6,12 @@
 
 ## Requirements
 
-* `node.js 0.6.5`
-* `request module`
+* `node.js 0.6.5`  || http://nodejs.org/
+* `request module` || https://github.com/mikeal/request
 
 ## How to use it
 
-The script takes 2 arguments the keyword and the language currently only supports english and spanish from Mexico.
+The script takes 2 arguments, the keyword and the language. Currently only supports english from US and spanish from Mexico.
 
 Example:
 
