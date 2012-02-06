@@ -14,8 +14,19 @@
 **/
 
 var request = require('request');
+var proxyEnable    = true;  //enable or disable proxy
+var maxReqPerProxy = 7;   //Maximum number of requests before changing proxy
+var proxyList = ['202.75.54.155:3128',
+				 '64.15.144.85:3128',
+				 '64.152.0.217:81'];
+var proxyUser = '';
+var proxyPass = '';
+
+
 var chars = ['a','b','c', 'd', 'e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 var cabo = [];
+var requestsNo   = 0; 
+var currentProxy = 0;
 
 function inArray(needle, haystack) {
     var length = haystack.length;
@@ -23,6 +34,42 @@ function inArray(needle, haystack) {
         if(haystack[i] == needle) return true;
     }
     return false;
+}
+
+function getProxy() {
+
+	var proxy = 'http://';
+	
+	if (proxyEnable) {
+		var pListSize = proxyList.length - 1;
+
+		if (requestsNo > maxReqPerProxy) {
+			if (currentProxy < pListSize) {
+				currentProxy++;
+				requestsNo = 1;
+			} else {
+				currentProxy = 0;
+				requestsNo = 1;
+			}
+		}
+		
+		if (proxyUser != '') {
+			proxy = proxy+proxyUser;
+		}
+
+		if (proxyUser != '' && proxyPass != '') {
+			proxy = proxy+':'+proxyPass;
+		}
+
+		if (proxyUser != '') {
+			proxy = proxy + '@';
+		}
+			
+		proxy = proxy + proxyList[currentProxy];
+	} else {
+		proxy = false;
+	}
+	return proxy;
 }
 
 var client = function (provider, q, mkt) {
@@ -58,7 +105,15 @@ var client = function (provider, q, mkt) {
 	} else if (provider == 'google') {
 		requestDefaults.uri = 'http://clients1.google.'+tld+'/complete/search?hl='+lang+'&q='+keyword+'&json=t&ds=&client=serp'; 
 	}
-	keys = [];
+
+	requestsNo++;
+	var proxy = getProxy();
+
+	if (proxy) {
+		requestDefaults.proxy = proxy;
+	}
+
+	var keys = [];
 	request(requestDefaults, function(e, res, body) {
 		var respuesta = JSON.parse(body);
 		var suggests;
